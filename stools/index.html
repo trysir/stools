@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>网页节拍器</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="metronome">
+    <div id="controls">
+        <label for="bpm">速度 (BPM):</label>
+        <input type="number" id="bpm" value="120">
+        <button id="startStop">开始</button>
+    </div>
+    <div id="visual"></div>
+</div>
+<script src="script.js"></script>
+</body>
+<title>网页计算器</title>
+<style>
+  #calculator {
+    text-align: center;
+    width: 262px; /* 调整计算器宽度以确保边沿对齐 */
+    margin: 50px auto;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .display {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 10px;
+    text-align: right;
+    padding: 5px;
+    box-sizing: border-box;
+  }
+  .input-display {
+    font-size: 18px;
+    background: #EFEFEF;
+  }
+  .result-display {
+    color: green;
+    background: #D4EDDA;
+  }
+  .button, .long-button {
+    height: 40px;
+    border: 1px solid #999;
+    margin: 2px; /* 调整为2px，以保持按钮间距一致，确保对齐 */
+    font-size:18px;
+  }
+  .button {
+    width: calc(25% - 10px); /* 调整按钮宽度以确保边沿对齐 */
+  }
+  .long-button {
+    width: calc(50% - 10px); /* 调整长按钮宽度以确保边沿对齐 */
+  }
+</style>
+</head>
+<body>
+
+<div id="calculator">
+  <input type="text" id="inputDisplay" class="display input-display" disabled>
+  <input type="text" id="resultDisplay" class="display result-display" disabled>
+  <div>
+    <button class="button" onclick="inputDigit('7')">7</button>
+    <button class="button" onclick="inputDigit('8')">8</button>
+    <button class="button" onclick="inputDigit('9')">9</button>
+    <button class="button" onclick="inputOperation('/')">/</button>
+  </div>
+  <div>
+    <button class="button" onclick="inputDigit('4')">4</button>
+    <button class="button" onclick="inputDigit('5')">5</button>
+    <button class="button" onclick="inputDigit('6')">6</button>
+    <button class="button" onclick="inputOperation('*')">*</button>
+  </div>
+  <div>
+    <button class="button" onclick="inputDigit('1')">1</button>
+    <button class="button" onclick="inputDigit('2')">2</button>
+    <button class="button" onclick="inputDigit('3')">3</button>
+    <button class="button" onclick="inputOperation('-')">-</button>
+  </div>
+  <div>
+    <button class="button" onclick="inputDigit('0')">0</button>
+    <button class="button" onclick="inputDot()">.</button>
+    <button class="long-button" onclick="calculate()">=</button>
+    <button class="button" onclick="inputOperation('+')">+</button>
+  </div>
+  <div>
+    <button class="long-button" onclick="backspace()">退回</button>
+    <button class="long-button" onclick="clearAll()">C</button>
+  </div>
+</div>
+
+<script>
+var inputDisplay = document.getElementById('inputDisplay');
+var resultDisplay = document.getElementById('resultDisplay');
+
+function inputDigit(digit) {
+  inputDisplay.value += digit;
+  calculate();
+}
+
+function inputOperation(operation) {
+  inputDisplay.value += ' ' + operation + ' ';
+  resultDisplay.value = '';
+}
+
+function inputDot() {
+  if (inputDisplay.value.slice(-1) !== '.') {
+    inputDisplay.value += '.';
+  }
+}
+
+function backspace() {
+  inputDisplay.value = inputDisplay.value.slice(0, -1);
+  calculate();
+}
+
+function clearAll() {
+  inputDisplay.value = '';
+  resultDisplay.value = '';
+}
+
+function calculate() {
+  try {
+    resultDisplay.value = eval(inputDisplay.value);
+  } catch(e) {
+    if (inputDisplay.value !== '') {
+      resultDisplay.value = '错误';
+    }
+  }
+}
+</script>
+
+</body>
+</html>
